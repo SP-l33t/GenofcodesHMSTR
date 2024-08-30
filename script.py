@@ -73,7 +73,7 @@ async def get_promo_code(session, game_key):
         return None
 
     promo_code = None
-
+    attempt = 0
     for _ in range(MAX_RETRIES):
         try:
             await asyncio.sleep(game_config["delay"])
@@ -90,7 +90,8 @@ async def get_promo_code(session, game_key):
             )
         except Exception as e:
             info(f"Failed to register event for {game_key}: {e}")
-            await asyncio.sleep(game_config["retry"])
+            attempt += 1
+            await asyncio.sleep(min(game_config["retry"] * attempt, game_config["retry"] * 10))
             continue
 
         if not register_event_data.get("hasCode"):
@@ -133,11 +134,13 @@ async def main():
             with open(file_path, "a") as f:
                 async def write_promo_codes(game_key):
                     await asyncio.sleep(randint(1, 10))
-                    for _ in range(games[game_key]["keys"]):
+                    codes = 0
+                    while codes < games[game_key]["keys"]:
                         code = await get_promo_code(session, game_key)
                         if code:
                             info(f"{code}")
                             promo_codes.append(f"`{code}`\n")
+                            codes += 1
 
                 tasks = [write_promo_codes(game_key) for game_key in games]
                 await asyncio.gather(*tasks)
