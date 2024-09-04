@@ -47,5 +47,19 @@
         "delay": 20,
         "retry": 20,
         "keys": 4
+    },
+    "Fluff Crusade": {
+        "appToken": "112887b0-a8af-4eb2-ac63-d82df78283d9",
+        "promoId": "112887b0-a8af-4eb2-ac63-d82df78283d9",
+        "delay": 120,
+        "retry": 20,
+        "keys": 8
+    },
+    "Tile Trio": {
+        "appToken": "e68b39d2-4880-4a31-b3aa-0393e7df10c7",
+        "promoId": "e68b39d2-4880-4a31-b3aa-0393e7df10c7",
+        "delay": 120,
+        "retry": 20,
+        "keys": 4
     }
 }
